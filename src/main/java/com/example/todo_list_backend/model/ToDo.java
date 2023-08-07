@@ -2,6 +2,7 @@ package com.example.todo_list_backend.model;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -17,9 +18,9 @@ import java.util.Random;
 @Data
 public class ToDo {
 
-
     private int id;
     @NotBlank(message = "The text for the to-do is required.")
+    @Size(max = 120)
     private String text;
     private boolean done;
     @NotNull
