@@ -29,13 +29,18 @@ public class ToDoServiceImpl implements ToDoService{
 
     }
 
-    public ToDo changeDone(ToDo toDo) {
+    public ToDo changeDoneToTrue(ToDo toDo) {
+        if (!toDo.isDone()) {
+            toDo.setDone(true);
+            toDo.setDateDone(java.time.LocalDate.now());
+        }
+        return edit(toDo);
+    }
+
+    public ToDo changeDoneToFalse(ToDo toDo) {
         if (toDo.isDone()) {
             toDo.setDone(false);
             toDo.setDateDone(null);
-        } else {
-            toDo.setDone(true);
-            toDo.setDateDone(java.time.LocalDate.now());
         }
         return edit(toDo);
     }

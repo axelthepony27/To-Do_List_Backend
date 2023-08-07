@@ -2,13 +2,10 @@ package com.example.todo_list_backend.repository;
 
 import com.example.todo_list_backend.model.Priority;
 import com.example.todo_list_backend.model.ToDo;
-import com.example.todo_list_backend.service.ToDoServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.Map.Entry;
 
 /*
     Once the database is ready, this class won't be needed anymore.
@@ -17,28 +14,40 @@ import java.util.List;
 @Component
 public class ToDoRepositoryImpl implements ToDoRepository{
 
-    public List<ToDo> toDoList = generateSampleToDoList();
+    public Map<Integer, ToDo> toDoMap = generateSampleToDoMap();
+
+    @Override
+    public boolean existsById(int id){
+        return toDoMap.containsKey(id);
+    }
+
+    @Override
+    public ToDo findById(int id){
+        return existsById(id) ? toDoMap.get(id) : null;
+    }
 
     @Override
     public boolean existsByTextAndPriority(String text, Priority priority) {
-        ToDo newToDo = new ToDo(text, priority);
-        return this.toDoList.contains(newToDo);
+        return toDoMap.containsValue(new ToDo(text, priority));
     }
 
     @Override
     public ToDo findByTextAndPriority(String text, Priority priority) {
         if(existsByTextAndPriority(text, priority)){
-            ToDo newToDo = new ToDo(text, priority);
-            return this.toDoList.get(this.toDoList.indexOf(newToDo));
-        } else{
-            return null;
+            ToDo value = new ToDo(text, priority);
+            for (Entry<Integer, ToDo> entry : toDoMap.entrySet()) {
+                if (Objects.equals(value, entry.getValue())) {
+                    return toDoMap.get(entry.getKey());
+                }
+            }
         }
+        return null;
     }
 
     @Override
     public List<ToDo> findAllByText(String text) {
         List<ToDo> newList = new ArrayList<>();
-        for(ToDo toDo : this.toDoList){
+        for(ToDo toDo : this.toDoMap.values()){
             if(toDo.getText().equals(text)){
                 newList.add(toDo);
             }
@@ -50,7 +59,7 @@ public class ToDoRepositoryImpl implements ToDoRepository{
     @Override
     public List<ToDo> findAllByPriority(Priority priority) {
         List<ToDo> newList = new ArrayList<>();
-        for(ToDo toDo : this.toDoList){
+        for(ToDo toDo : this.toDoMap.values()){
             if(toDo.getPriority() == priority){
                 newList.add(toDo);
             }
@@ -62,7 +71,7 @@ public class ToDoRepositoryImpl implements ToDoRepository{
     @Override
     public List<ToDo> findAllByDone(boolean done) {
         List<ToDo> newList = new ArrayList<>();
-        for(ToDo toDo : this.toDoList){
+        for(ToDo toDo : this.toDoMap.values()){
             if(toDo.isDone() == done){
                 newList.add(toDo);
             }
@@ -71,12 +80,17 @@ public class ToDoRepositoryImpl implements ToDoRepository{
         return newList;
     }
 
-    public List<ToDo> generateSampleToDoList(){
-        List<ToDo> toDos = new ArrayList<>();
-        toDos.add(new ToDo("This is a to-do. Should be first on the list.", Priority.LOW));
-        toDos.add(new ToDo("This is another to-do. Should be second on the list.", Priority.MEDIUM));
-        toDos.add(new ToDo());
-        toDos.add(new ToDo("This is one more to-do. Should be fourth on the list.", Priority.HIGH));
+    public Map<Integer, ToDo> generateSampleToDoMap(){
+        Map<Integer, ToDo> toDos = new HashMap<>();
+        ToDo toDo1 = new ToDo("This is a to-do. Should be first on the list.", Priority.LOW);
+        ToDo toDo2 = new ToDo("This is a to-do. Should be first on the list.", Priority.LOW);
+        ToDo toDo3 = new ToDo("This is a to-do. Should be first on the list.", Priority.LOW);
+        ToDo toDo4 = new ToDo("This is a to-do. Should be first on the list.", Priority.LOW);
+
+        toDos.put(toDo1.getId(), toDo1);
+        toDos.put(toDo2.getId(), toDo2);
+        toDos.put(toDo3.getId(), toDo3);
+        toDos.put(toDo4.getId(), toDo4);
         return toDos;
     }
 }

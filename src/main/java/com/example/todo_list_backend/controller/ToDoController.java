@@ -22,14 +22,21 @@ public class ToDoController {
 
     @GetMapping("")
     private ResponseEntity<String> toDos() {
-        return new ResponseEntity<>(JsonHandler.toJson(toDoRepository.toDoList), HttpStatus.OK);
+        return new ResponseEntity<>(JsonHandler.toJson(toDoRepository.toDoMap), HttpStatus.OK);
     }
 
     @PostMapping("")
     private ResponseEntity<String> crateToDo(@Valid @RequestBody ToDo toDo) {
         ToDo newToDo = toDoService.create(toDo.getText(), toDo.getPriority(), toDo.getDueDate());
-        toDoRepository.toDoList.add(newToDo);
-        return new ResponseEntity<>(JsonHandler.toJson(toDoRepository.toDoList), HttpStatus.OK);
+        toDoRepository.toDoMap.put(newToDo.getId(), newToDo);
+        return new ResponseEntity<>(JsonHandler.toJson(toDoRepository.toDoMap), HttpStatus.OK);
     }
+
+    /*
+    @PutMapping("/{id}")
+    private ResponseEntity<String> editToDo(@Valid @RequestBody ToDo toDo, @PathVariable int id){
+        if(toDoRepository)
+    }
+     */
 
 }

@@ -18,7 +18,7 @@ import java.util.Random;
 @Data
 public class ToDo {
 
-    private int id;
+    private int id = new Random().nextInt(100000);
     @NotBlank(message = "The text for the to-do is required.")
     @Size(max = 120)
     private String text;
@@ -33,7 +33,6 @@ public class ToDo {
     }
 
     public ToDo(String text, Priority priority) {
-        this.id = new Random().nextInt();
         this.text = text;
         this.done = false;
         this.priority = priority;
@@ -43,7 +42,6 @@ public class ToDo {
     }
 
     public ToDo(String text, Priority priority, LocalDate dueDate) {
-        this.id = new Random().nextInt();
         this.text = text;
         this.done = false;
         this.priority = priority;

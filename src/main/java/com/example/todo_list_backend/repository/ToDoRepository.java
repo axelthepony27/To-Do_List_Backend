@@ -19,11 +19,12 @@ import java.util.List;
 // @Repository
 // public interface ToDoRepository  extends JpaRepository<ToDo, Integer> {
 public interface ToDoRepository {
-    // boolean existsById(int id);
+    boolean existsById(int id);
 
     boolean existsByTextAndPriority(String text, Priority priority);
 
-    // ToDo findById(int id);
+    ToDo findById(int id);
+
     ToDo findByTextAndPriority(String text, Priority priority);
 
     List<ToDo> findAllByText(String text);
