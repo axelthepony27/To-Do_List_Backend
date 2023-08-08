@@ -2,6 +2,9 @@ package com.example.todo_list_backend.service;
 
 import com.example.todo_list_backend.model.Priority;
 import com.example.todo_list_backend.model.ToDo;
+import com.example.todo_list_backend.repository.ToDoRepository;
+import com.example.todo_list_backend.repository.ToDoRepositoryImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -14,19 +17,23 @@ import java.util.List;
 
 @Service
 public class ToDoServiceImpl implements ToDoService{
+
+    @Autowired
+    ToDoRepository toDoRepository;
+
     @Override
-    public ToDo create(String text, Priority priority, LocalDate dueDate) {
-        return new ToDo(text, priority, dueDate);
+    public ToDo create(ToDo toDo) {
+        return toDoRepository.save(toDo);
     }
 
     @Override
     public ToDo edit(ToDo newToDo) {
-        return newToDo;
+        return toDoRepository.save(newToDo);
     }
 
     @Override
     public void delete(int toDoId) {
-
+        toDoRepository.deleteById(toDoId);
     }
 
     public ToDo changeDoneToTrue(ToDo toDo) {

@@ -32,4 +32,8 @@ public interface ToDoRepository {
     List<ToDo> findAllByPriority(Priority priority);
 
     List<ToDo> findAllByDone(boolean done);
+
+    ToDo save(ToDo toDo);
+
+    void deleteById(int id);
 }

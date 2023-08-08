@@ -80,12 +80,23 @@ public class ToDoRepositoryImpl implements ToDoRepository{
         return newList;
     }
 
-    public Map<Integer, ToDo> generateSampleToDoMap(){
+    @Override
+    public ToDo save(ToDo toDo){
+        this.toDoMap.put(toDo.getId(), toDo);
+        return toDo;
+    }
+
+    @Override
+    public void deleteById(int id){
+        this.toDoMap.remove(id);
+    }
+
+    private Map<Integer, ToDo> generateSampleToDoMap(){
         Map<Integer, ToDo> toDos = new HashMap<>();
         ToDo toDo1 = new ToDo("This is a to-do. Should be first on the list.", Priority.LOW);
-        ToDo toDo2 = new ToDo("This is a to-do. Should be first on the list.", Priority.LOW);
-        ToDo toDo3 = new ToDo("This is a to-do. Should be first on the list.", Priority.LOW);
-        ToDo toDo4 = new ToDo("This is a to-do. Should be first on the list.", Priority.LOW);
+        ToDo toDo2 = new ToDo("This is another to-do. Should be second on the list.", Priority.MEDIUM);
+        ToDo toDo3 = new ToDo();
+        ToDo toDo4 = new ToDo("This is yet another to-do. Should be fourth on the list.", Priority.HIGH);
 
         toDos.put(toDo1.getId(), toDo1);
         toDos.put(toDo2.getId(), toDo2);
