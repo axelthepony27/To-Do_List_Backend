@@ -41,11 +41,25 @@ public class ToDoController {
         return new ResponseEntity<>(JsonHandler.toJson(toDoRepository.toDoMap), HttpStatus.OK);
     }
 
-    /*
-    @PutMapping("/{id}")
-    private ResponseEntity<String> editToDo(@Valid @RequestBody ToDo toDo, @PathVariable int id){
-        if(toDoRepository)
+
+    @PutMapping("/{id}/done")
+    private ResponseEntity<String> doToDo(@PathVariable int id){
+        if(toDoRepository.existsById(id)) {
+            ToDo editedToDo = toDoService.changeDoneToTrue(toDoRepository.findById(id));
+            return new ResponseEntity<>(JsonHandler.toJson(editedToDo), HttpStatus.OK);
+        }else {
+            throw new ToDoNotFoundException(String.format("Couldn't find ToDo with ID: %d", id));
+        }
     }
-     */
+
+    @PutMapping("/{id}/undone")
+    private ResponseEntity<String> undoToDo(@PathVariable int id){
+        if(toDoRepository.existsById(id)) {
+            ToDo editedToDo = toDoService.changeDoneToFalse(toDoRepository.findById(id));
+            return new ResponseEntity<>(JsonHandler.toJson(editedToDo), HttpStatus.OK);
+        }else {
+            throw new ToDoNotFoundException(String.format("Couldn't find ToDo with ID: %d", id));
+        }
+    }
 
 }
