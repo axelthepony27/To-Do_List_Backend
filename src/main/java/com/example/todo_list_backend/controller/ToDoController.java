@@ -35,6 +35,19 @@ public class ToDoController {
         }
     }
 
+    @PutMapping("/{id}")
+    private ResponseEntity<String> editToDo(@PathVariable int id, @Valid @RequestBody ToDo newToDo) {
+        if(toDoRepository.existsById(id)) {
+            ToDo oldToDo = toDoRepository.findById(id);
+            oldToDo.setText(newToDo.getText());
+            oldToDo.setPriority(newToDo.getPriority());
+            oldToDo.setDueDate(newToDo.getDueDate());
+            return new ResponseEntity<>(JsonHandler.toJson(oldToDo), HttpStatus.OK);
+        }else {
+            throw new ToDoNotFoundException(String.format("Couldn't find ToDo with ID: %d", id));
+        }
+    }
+
     @PostMapping("")
     private ResponseEntity<String> crateToDo(@Valid @RequestBody ToDo toDo) {
         toDoRepository.save(toDoService.create(toDo));
