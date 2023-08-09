@@ -18,8 +18,12 @@ import java.util.List;
 @Service
 public class ToDoServiceImpl implements ToDoService{
 
+    private final ToDoRepository toDoRepository;
+
     @Autowired
-    ToDoRepository toDoRepository;
+    public ToDoServiceImpl(ToDoRepository toDoRepository){
+        this.toDoRepository = toDoRepository;
+    }
 
     @Override
     public ToDo create(ToDo toDo) {
@@ -36,6 +40,7 @@ public class ToDoServiceImpl implements ToDoService{
         toDoRepository.deleteById(toDoId);
     }
 
+    @Override
     public ToDo changeDoneToTrue(ToDo toDo) {
         if (!toDo.isDone()) {
             toDo.setDone(true);
@@ -44,6 +49,7 @@ public class ToDoServiceImpl implements ToDoService{
         return edit(toDo);
     }
 
+    @Override
     public ToDo changeDoneToFalse(ToDo toDo) {
         if (toDo.isDone()) {
             toDo.setDone(false);

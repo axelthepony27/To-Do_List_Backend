@@ -13,16 +13,16 @@ import java.time.LocalDateTime;
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ToDoNotFoundException.class)
-    public ResponseEntity<CustomErrorMessage> handleFlightNotFound(
+    public ResponseEntity<CustomErrorMessage> handleToDoNotFound(
             ToDoNotFoundException e,
             WebRequest request) {
         CustomErrorMessage body = new CustomErrorMessage(LocalDateTime.now(),
-                HttpStatus.FORBIDDEN.value(),
+                HttpStatus.NOT_FOUND.value(),
                 e.getCause().getMessage(),
                 e.getMessage(),
                 request.getDescription(false)
                 );
-        return new ResponseEntity<>(body, HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
 }

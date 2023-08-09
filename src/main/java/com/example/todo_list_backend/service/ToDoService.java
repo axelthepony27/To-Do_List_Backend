@@ -9,5 +9,6 @@ public interface ToDoService {
     ToDo create(ToDo toDo);
     ToDo edit(ToDo oldToDo);
     void delete(int toDoId);
-
+    public ToDo changeDoneToTrue(ToDo toDo);
+    public ToDo changeDoneToFalse(ToDo toDo);
 }

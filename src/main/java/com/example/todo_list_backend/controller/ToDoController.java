@@ -1,7 +1,9 @@
 package com.example.todo_list_backend.controller;
 
 import com.example.todo_list_backend.model.ToDo;
+import com.example.todo_list_backend.repository.ToDoRepository;
 import com.example.todo_list_backend.repository.ToDoRepositoryImpl;
+import com.example.todo_list_backend.service.ToDoService;
 import com.example.todo_list_backend.service.ToDoServiceImpl;
 import com.example.todo_list_backend.service.errorHandling.ToDoNotFoundException;
 import com.example.todo_list_backend.utils.JsonHandler;
@@ -15,11 +17,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/todos")
 public class ToDoController {
 
-    @Autowired
-    ToDoServiceImpl toDoService;
+    private final ToDoService toDoService;
+
+    private final ToDoRepository toDoRepository;
 
     @Autowired
-    ToDoRepositoryImpl toDoRepository;
+    public ToDoController(ToDoService toDoService, ToDoRepository toDoRepository){
+        this.toDoService = toDoService;
+        this.toDoRepository = toDoRepository;
+    }
 
     @GetMapping("")
     private ResponseEntity<String> toDos() {
