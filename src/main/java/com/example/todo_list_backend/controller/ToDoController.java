@@ -55,9 +55,9 @@ public class ToDoController {
     }
 
     @PostMapping("")
-    private ResponseEntity<String> crateToDo(@Valid @RequestBody ToDo toDo) {
+    private ResponseEntity<String> createToDo(@Valid @RequestBody ToDo toDo) {
         toDoRepository.save(toDoService.create(toDo));
-        return new ResponseEntity<>(JsonHandler.toJson(toDoRepository.toDoMap), HttpStatus.OK);
+        return new ResponseEntity<>(JsonHandler.toJson(toDoRepository.toDoMap), HttpStatus.CREATED);
     }
 
 
