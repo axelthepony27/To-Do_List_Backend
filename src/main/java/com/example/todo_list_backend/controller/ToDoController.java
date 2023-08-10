@@ -42,7 +42,7 @@ public class ToDoController {
     }
 
     @PutMapping("/{id}")
-    private ResponseEntity<String> editToDo(@PathVariable int id, @Valid @RequestBody ToDo newToDo) {
+    private ResponseEntity<String> updateToDo(@PathVariable int id, @Valid @RequestBody ToDo newToDo) {
         if(toDoRepository.existsById(id)) {
             ToDo oldToDo = toDoRepository.findById(id);
             oldToDo.setText(newToDo.getText());
