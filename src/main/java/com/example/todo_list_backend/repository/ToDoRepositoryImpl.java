@@ -25,12 +25,12 @@ public class ToDoRepositoryImpl implements ToDoRepository{
     }
 
     @Override
-    public boolean existsByTextAndPriority(String text, Priority priority) {
+    public boolean existsByTextAndPriority(String text, String priority) {
         return toDoMap.containsValue(new ToDo(text, priority));
     }
 
     @Override
-    public ToDo findByTextAndPriority(String text, Priority priority) {
+    public ToDo findByTextAndPriority(String text, String priority) {
         if(existsByTextAndPriority(text, priority)){
             ToDo value = new ToDo(text, priority);
             for (Entry<Integer, ToDo> entry : toDoMap.entrySet()) {
@@ -55,10 +55,10 @@ public class ToDoRepositoryImpl implements ToDoRepository{
     }
 
     @Override
-    public List<ToDo> findAllByPriority(Priority priority) {
+    public List<ToDo> findAllByPriority(String priority) {
         List<ToDo> newList = new ArrayList<>();
         for(ToDo toDo : this.toDoMap.values()){
-            if(toDo.getPriority() == priority){
+            if(toDo.getPriority().equals(priority)){
                 newList.add(toDo);
             }
         }

@@ -24,7 +24,7 @@ public class ToDo {
     private String text;
     private boolean done;
     @NotNull
-    private Priority priority;
+    private String priority;
     private LocalDate dueDate;
     private LocalDate dateCreated;
     private LocalDate dateDone;
@@ -32,7 +32,7 @@ public class ToDo {
     public ToDo() {
     }
 
-    public ToDo(String text, Priority priority) {
+    public ToDo(String text, String priority) {
         this.text = text;
         this.done = false;
         this.priority = priority;
@@ -41,7 +41,7 @@ public class ToDo {
         this.dateDone = null;
     }
 
-    public ToDo(String text, Priority priority, LocalDate dueDate) {
+    public ToDo(String text, String priority, LocalDate dueDate) {
         this.text = text;
         this.done = false;
         this.priority = priority;
@@ -82,11 +82,11 @@ public class ToDo {
         this.dateCreated = dateCreated;
     }
 
-    public Priority getPriority() {
+    public String getPriority() {
         return priority;
     }
 
-    public void setPriority(Priority priority) {
+    public void setPriority(String priority) {
         this.priority = priority;
     }
 
@@ -116,7 +116,7 @@ public class ToDo {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ToDo toDo = (ToDo) o;
-        return Objects.equals(text, toDo.text) && priority == toDo.priority;
+        return Objects.equals(text, toDo.text) && priority.equals(toDo.priority);
     }
 
     @Override
