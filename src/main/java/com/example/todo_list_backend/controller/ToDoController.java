@@ -2,9 +2,7 @@ package com.example.todo_list_backend.controller;
 
 import com.example.todo_list_backend.model.ToDo;
 import com.example.todo_list_backend.repository.ToDoRepository;
-import com.example.todo_list_backend.repository.ToDoRepositoryImpl;
 import com.example.todo_list_backend.service.ToDoService;
-import com.example.todo_list_backend.service.ToDoServiceImpl;
 import com.example.todo_list_backend.service.errorHandling.ToDoNotFoundException;
 import com.example.todo_list_backend.utils.JsonHandler;
 import jakarta.validation.Valid;

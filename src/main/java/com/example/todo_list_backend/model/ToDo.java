@@ -1,7 +1,6 @@
 package com.example.todo_list_backend.model;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -23,8 +22,7 @@ public class ToDo {
     @Size(max = 120)
     private String text;
     private boolean done;
-    @NotNull
-    private String priority;
+    private Priority priority;
     private LocalDate dueDate;
     private LocalDate dateCreated;
     private LocalDate dateDone;
@@ -32,7 +30,7 @@ public class ToDo {
     public ToDo() {
     }
 
-    public ToDo(String text, String priority) {
+    public ToDo(String text, Priority priority) {
         this.text = text;
         this.done = false;
         this.priority = priority;
@@ -41,7 +39,7 @@ public class ToDo {
         this.dateDone = null;
     }
 
-    public ToDo(String text, String priority, LocalDate dueDate) {
+    public ToDo(String text, Priority priority, LocalDate dueDate) {
         this.text = text;
         this.done = false;
         this.priority = priority;
@@ -82,11 +80,11 @@ public class ToDo {
         this.dateCreated = dateCreated;
     }
 
-    public String getPriority() {
+    public Priority getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(Priority priority) {
         this.priority = priority;
     }
 
