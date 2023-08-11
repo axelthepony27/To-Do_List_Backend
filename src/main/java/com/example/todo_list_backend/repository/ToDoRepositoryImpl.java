@@ -58,7 +58,7 @@ public class ToDoRepositoryImpl implements ToDoRepository{
     public List<ToDo> findAllByPriority(Priority priority) {
         List<ToDo> newList = new ArrayList<>();
         for(ToDo toDo : this.toDoMap.values()){
-            if(toDo.getPriority() == priority){
+            if(toDo.getPriority().equals(priority)){
                 newList.add(toDo);
             }
         }
