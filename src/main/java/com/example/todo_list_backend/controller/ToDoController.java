@@ -29,7 +29,7 @@ public class ToDoController {
 
     @GetMapping("")
     private ResponseEntity<String> toDos() {
-        return new ResponseEntity<>(JsonHandler.toJson(toDoRepository.toDoMap), HttpStatus.OK);
+        return new ResponseEntity<>(JsonHandler.toJson(toDoRepository.toDoMap.values()), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
