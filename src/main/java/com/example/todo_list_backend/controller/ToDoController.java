@@ -42,11 +42,9 @@ public class ToDoController {
     @PutMapping("/{id}")
     private ResponseEntity<String> updateToDo(@PathVariable int id, @Valid @RequestBody ToDo newToDo) {
         if(toDoRepository.existsById(id)) {
-            ToDo oldToDo = toDoRepository.findById(id);
-            oldToDo.setText(newToDo.getText());
-            oldToDo.setPriority(newToDo.getPriority());
-            oldToDo.setDueDate(newToDo.getDueDate());
-            return new ResponseEntity<>(JsonHandler.toJson(oldToDo), HttpStatus.OK);
+            newToDo.setId(id);
+            toDoService.edit(newToDo);
+            return new ResponseEntity<>(JsonHandler.toJson(newToDo), HttpStatus.OK);
         }else {
             throw new ToDoNotFoundException(String.format("Couldn't find ToDo with ID: %d", id));
         }
@@ -55,8 +53,8 @@ public class ToDoController {
     @PostMapping("")
     private ResponseEntity<String> createToDo(@Valid @RequestBody ToDo toDo) {
         toDo.setId(toDoRepository.toDoMap.size());
-        toDoService.create(toDo);
-        return new ResponseEntity<>(JsonHandler.toJson(toDoRepository.findAll()), HttpStatus.CREATED);
+        ToDo newToDo = toDoService.create(toDo);
+        return new ResponseEntity<>(JsonHandler.toJson(newToDo), HttpStatus.CREATED);
     }
 
 
@@ -74,7 +72,7 @@ public class ToDoController {
     private ResponseEntity<String> undoToDo(@PathVariable int id){
         if(toDoRepository.existsById(id)) {
             ToDo editedToDo = toDoService.changeDoneToFalse(toDoRepository.findById(id));
-            return new ResponseEntity<>(JsonHandler.toJson(toDoRepository.findAll()), HttpStatus.OK);
+            return new ResponseEntity<>(JsonHandler.toJson(editedToDo), HttpStatus.OK);
         }else {
             throw new ToDoNotFoundException(String.format("Couldn't find ToDo with ID: %d", id));
         }
