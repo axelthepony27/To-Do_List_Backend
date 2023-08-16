@@ -42,6 +42,11 @@ public class ToDoRepositoryImpl implements ToDoRepository{
         return null;
     }
 
+   @Override
+   public List<ToDo> findAll(){
+       return new ArrayList<>(this.toDoMap.values());
+   }
+
     @Override
     public List<ToDo> findAllByText(String text) {
         List<ToDo> newList = new ArrayList<>();

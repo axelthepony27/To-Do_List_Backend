@@ -30,6 +30,8 @@ public interface ToDoRepository {
 
     ToDo findByTextAndPriority(String text, Priority priority);
 
+    List<ToDo> findAll();
+
     List<ToDo> findAllByText(String text);
 
     List<ToDo> findAllByPriority(Priority priority);
