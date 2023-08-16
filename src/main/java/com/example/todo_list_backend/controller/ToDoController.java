@@ -74,7 +74,17 @@ public class ToDoController {
     private ResponseEntity<String> undoToDo(@PathVariable int id){
         if(toDoRepository.existsById(id)) {
             ToDo editedToDo = toDoService.changeDoneToFalse(toDoRepository.findById(id));
-            return new ResponseEntity<>(JsonHandler.toJson(editedToDo), HttpStatus.OK);
+            return new ResponseEntity<>(JsonHandler.toJson(toDoRepository.toDoMap.values()), HttpStatus.OK);
+        }else {
+            throw new ToDoNotFoundException(String.format("Couldn't find ToDo with ID: %d", id));
+        }
+    }
+
+    @DeleteMapping("{id}")
+    private ResponseEntity<String> deleteToDo(@PathVariable int id){
+        if(toDoRepository.existsById(id)) {
+            toDoService.delete(id);
+            return new ResponseEntity<>(JsonHandler.toJson(toDoRepository.toDoMap.values()), HttpStatus.OK);
         }else {
             throw new ToDoNotFoundException(String.format("Couldn't find ToDo with ID: %d", id));
         }
