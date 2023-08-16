@@ -2,6 +2,9 @@ package com.example.todo_list_backend.repository;
 
 import com.example.todo_list_backend.model.Priority;
 import com.example.todo_list_backend.model.ToDo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -92,6 +95,21 @@ public class ToDoRepositoryImpl implements ToDoRepository{
     @Override
     public void deleteById(int id){
         this.toDoMap.remove(id);
+    }
+
+    @Override
+    public Page<ToDo> toPage(int pageSize, int pageNo){
+        List<ToDo> list = this.findAll();
+
+        int totalPages = list.size() / pageSize;
+        PageRequest pageable = PageRequest.of(pageNo, pageSize);
+
+        int max = pageNo >= totalPages ? list.size() : pageSize * (pageNo + 1);
+        int min = pageNo > totalPages ? max : pageSize * pageNo;
+
+        // logger.info("totalPages{} pageSize {} pageNo {}   list size {} min {}   max {} ...........", totalPages,pageSize, pageNo, list.size(), min, max);
+
+        return new PageImpl<>(list.subList(min, max), pageable, list.size());
     }
 
 }

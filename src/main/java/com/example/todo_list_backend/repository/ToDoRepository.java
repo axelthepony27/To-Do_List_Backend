@@ -9,6 +9,7 @@ package com.example.todo_list_backend.repository;
 
 import com.example.todo_list_backend.model.Priority;
 import com.example.todo_list_backend.model.ToDo;
+import org.springframework.data.domain.Page;
 
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
@@ -41,6 +42,8 @@ public interface ToDoRepository {
     ToDo save(ToDo toDo);
 
     void deleteById(int id);
+
+    Page<ToDo> toPage(int pageSize, int pageNo);
 
     static Map<Integer, ToDo> generateSampleToDoMap() {
         Map<Integer, ToDo> toDos = new LinkedHashMap<>();
