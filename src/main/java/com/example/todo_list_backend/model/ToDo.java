@@ -18,7 +18,7 @@ import java.util.Random;
 @Data
 public class ToDo {
 
-    private int id = new Random().nextInt(100000);
+    private int id;
     @NotBlank(message = "The text for the to-do is required.")
     @Size(max = 120)
     private String text;
@@ -26,28 +26,38 @@ public class ToDo {
     @NotNull
     private Priority priority;
     private LocalDate dueDate;
-    private LocalDate dateCreated;
+    private final LocalDate dateCreated = LocalDate.now();
     private LocalDate dateDone;
 
     public ToDo() {
     }
 
-    public ToDo(String text, Priority priority) {
+    public ToDo(int id, String text, Priority priority) {
+        this.id = id;
         this.text = text;
         this.done = false;
         this.priority = priority;
         this.dueDate = null;
-        this.dateCreated = java.time.LocalDate.now();
+        // this.dateCreated = java.time.LocalDate.now();
         this.dateDone = null;
     }
 
-    public ToDo(String text, Priority priority, LocalDate dueDate) {
+    public ToDo(int id, String text, Priority priority, LocalDate dueDate) {
+        this.id = id;
         this.text = text;
         this.done = false;
         this.priority = priority;
         this.dueDate = dueDate;
-        this.dateCreated = java.time.LocalDate.now();
+        // this.dateCreated = java.time.LocalDate.now();
         this.dateDone = null;
+    }
+
+    public ToDo(String text, Priority priority, LocalDate dueDate){
+        this(0, text, priority, dueDate);
+    }
+
+    public ToDo(String text, Priority priority){
+        this(0, text, priority);
     }
 
     public int getId() {
@@ -78,9 +88,11 @@ public class ToDo {
         return dateCreated;
     }
 
+    /*
     public void setDateCreated(LocalDate dateCreated) {
         this.dateCreated = dateCreated;
     }
+     */
 
     public Priority getPriority() {
         return priority;
