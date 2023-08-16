@@ -1,6 +1,7 @@
 package com.example.todo_list_backend.model;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -22,6 +23,7 @@ public class ToDo {
     @Size(max = 120)
     private String text;
     private boolean done;
+    @NotNull
     private Priority priority;
     private LocalDate dueDate;
     private LocalDate dateCreated;
