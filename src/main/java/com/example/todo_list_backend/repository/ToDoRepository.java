@@ -9,7 +9,6 @@ package com.example.todo_list_backend.repository;
 
 import com.example.todo_list_backend.model.Priority;
 import com.example.todo_list_backend.model.ToDo;
-import org.springframework.data.domain.Page;
 
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
@@ -21,7 +20,7 @@ import java.util.Map;
 // public interface ToDoRepository  extends JpaRepository<ToDo, Integer> {
 public interface ToDoRepository {
 
-    public Map<Integer, ToDo> toDoMap = generateSampleToDoMap();
+    Map<Integer, ToDo> toDoMap = generateSampleToDoMap();
 
     boolean existsById(int id);
 

@@ -1,6 +1,5 @@
 package com.example.todo_list_backend.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -51,11 +50,11 @@ public class ToDo {
         this.dateDone = null;
     }
 
-    public ToDo(String text, Priority priority, LocalDate dueDate){
+    public ToDo(String text, Priority priority, LocalDate dueDate) {
         this(0, text, priority, dueDate);
     }
 
-    public ToDo(String text, Priority priority){
+    public ToDo(String text, Priority priority) {
         this(0, text, priority);
     }
 

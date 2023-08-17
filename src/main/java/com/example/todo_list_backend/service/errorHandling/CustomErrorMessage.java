@@ -1,18 +1,15 @@
 package com.example.todo_list_backend.service.errorHandling;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.time.LocalDateTime;
 
 public class CustomErrorMessage {
 
-    private LocalDateTime timestamp;
-    private int statusCode;
-    private String error;
-    private String message;
+    private final LocalDateTime timestamp;
+    private final int statusCode;
+    private final String error;
+    private final String message;
 
-    private String description;
+    private final String description;
 
 
     public CustomErrorMessage(LocalDateTime timestamp,
@@ -43,7 +40,7 @@ public class CustomErrorMessage {
         return description;
     }
 
-    public String getError(){
+    public String getError() {
         return error;
     }
 }

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class ToDoNotFoundException extends RuntimeException {
 
-    public ToDoNotFoundException(String message){
+    public ToDoNotFoundException(String message) {
         super(message);
     }
 }

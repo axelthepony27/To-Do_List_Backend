@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 public abstract class JsonHandler {
-    public static String toJson(Object o){
+    public static String toJson(Object o) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         ObjectWriter ow = objectMapper.writer().withDefaultPrettyPrinter();

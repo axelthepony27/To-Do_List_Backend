@@ -12,12 +12,12 @@ import java.time.LocalDateTime;
  */
 
 @Service
-public class ToDoServiceImpl implements ToDoService{
+public class ToDoServiceImpl implements ToDoService {
 
     private final ToDoRepository toDoRepository;
 
     @Autowired
-    public ToDoServiceImpl(ToDoRepository toDoRepository){
+    public ToDoServiceImpl(ToDoRepository toDoRepository) {
         this.toDoRepository = toDoRepository;
     }
 

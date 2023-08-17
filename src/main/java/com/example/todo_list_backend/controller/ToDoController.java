@@ -29,7 +29,7 @@ public class ToDoController {
     private static final int PAGE_SIZE = 5;
 
     @Autowired
-    public ToDoController(ToDoService toDoService, ToDoRepository toDoRepository, ToDoMetrics toDoMetrics){
+    public ToDoController(ToDoService toDoService, ToDoRepository toDoRepository, ToDoMetrics toDoMetrics) {
         this.toDoService = toDoService;
         this.toDoRepository = toDoRepository;
         this.toDoMetrics = toDoMetrics;
@@ -51,20 +51,20 @@ public class ToDoController {
 
     @GetMapping("/{id}")
     private ResponseEntity<String> getToDo(@PathVariable int id) {
-        if(toDoRepository.existsById(id)) {
+        if (toDoRepository.existsById(id)) {
             return new ResponseEntity<>(JsonHandler.toJson(toDoRepository.findById(id)), HttpStatus.OK);
-        }else {
+        } else {
             throw new ToDoNotFoundException(String.format("Couldn't find ToDo with ID: %d", id));
         }
     }
 
     @PutMapping("/{id}")
     private ResponseEntity<String> updateToDo(@PathVariable int id, @Valid @RequestBody ToDo newToDo) {
-        if(toDoRepository.existsById(id)) {
+        if (toDoRepository.existsById(id)) {
             newToDo.setId(id);
             toDoService.edit(newToDo);
             return new ResponseEntity<>(JsonHandler.toJson(newToDo), HttpStatus.OK);
-        }else {
+        } else {
             throw new ToDoNotFoundException(String.format("Couldn't find ToDo with ID: %d", id));
         }
     }
@@ -78,31 +78,31 @@ public class ToDoController {
 
 
     @PutMapping("/{id}/done")
-    private ResponseEntity<String> doToDo(@PathVariable int id){
-        if(toDoRepository.existsById(id)) {
+    private ResponseEntity<String> doToDo(@PathVariable int id) {
+        if (toDoRepository.existsById(id)) {
             ToDo editedToDo = toDoService.changeDoneToTrue(toDoRepository.findById(id));
             return new ResponseEntity<>(JsonHandler.toJson(editedToDo), HttpStatus.OK);
-        }else {
+        } else {
             throw new ToDoNotFoundException(String.format("Couldn't find ToDo with ID: %d", id));
         }
     }
 
     @PutMapping("/{id}/undone")
-    private ResponseEntity<String> undoToDo(@PathVariable int id){
-        if(toDoRepository.existsById(id)) {
+    private ResponseEntity<String> undoToDo(@PathVariable int id) {
+        if (toDoRepository.existsById(id)) {
             ToDo editedToDo = toDoService.changeDoneToFalse(toDoRepository.findById(id));
             return new ResponseEntity<>(JsonHandler.toJson(editedToDo), HttpStatus.OK);
-        }else {
+        } else {
             throw new ToDoNotFoundException(String.format("Couldn't find ToDo with ID: %d", id));
         }
     }
 
     @DeleteMapping("{id}")
-    private ResponseEntity<String> deleteToDo(@PathVariable int id){
-        if(toDoRepository.existsById(id)) {
+    private ResponseEntity<String> deleteToDo(@PathVariable int id) {
+        if (toDoRepository.existsById(id)) {
             toDoService.delete(id);
             return new ResponseEntity<>(JsonHandler.toJson(toDoRepository.findAll()), HttpStatus.OK);
-        }else {
+        } else {
             throw new ToDoNotFoundException(String.format("Couldn't find ToDo with ID: %d", id));
         }
     }

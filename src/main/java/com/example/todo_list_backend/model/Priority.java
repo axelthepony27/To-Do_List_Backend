@@ -3,9 +3,9 @@ package com.example.todo_list_backend.model;
 import java.awt.*;
 
 public enum Priority {
-    LOW ("Low", Color.GREEN),
+    LOW("Low", Color.GREEN),
     MEDIUM("Medium", Color.YELLOW),
-    HIGH ("High", Color.RED);
+    HIGH("High", Color.RED);
 
     private final String description;
     private final Color color;
@@ -19,7 +19,7 @@ public enum Priority {
         return description;
     }
 
-    public Color color(){
+    public Color color() {
         return color;
     }
 

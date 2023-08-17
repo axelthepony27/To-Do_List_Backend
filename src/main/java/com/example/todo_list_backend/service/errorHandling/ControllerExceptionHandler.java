@@ -1,6 +1,5 @@
 package com.example.todo_list_backend.service.errorHandling;
 
-import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -27,7 +26,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
                 HttpStatus.NOT_FOUND.getReasonPhrase(),
                 e.getMessage(),
                 request.getDescription(false)
-                );
+        );
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
@@ -35,7 +34,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers,
                                                                   HttpStatusCode status,
-                                                                  WebRequest request){
+                                                                  WebRequest request) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("status", status.value());
         body.put("timestamp", LocalDateTime.now());

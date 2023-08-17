@@ -2,28 +2,27 @@ package com.example.todo_list_backend.repository;
 
 import com.example.todo_list_backend.model.Priority;
 import com.example.todo_list_backend.model.ToDo;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 /*
     Once the database is ready, this class won't be needed anymore.
     Make sure to safe delete and refactor all that's necessary.
  */
 @Component
-public class ToDoRepositoryImpl implements ToDoRepository{
+public class ToDoRepositoryImpl implements ToDoRepository {
 
     @Override
-    public boolean existsById(int id){
+    public boolean existsById(int id) {
         return toDoMap.containsKey(id);
     }
 
     @Override
-    public ToDo findById(int id){
+    public ToDo findById(int id) {
         return existsById(id) ? toDoMap.get(id) : null;
     }
 
@@ -34,7 +33,7 @@ public class ToDoRepositoryImpl implements ToDoRepository{
 
     @Override
     public ToDo findByTextAndPriority(String text, Priority priority) {
-        if(existsByTextAndPriority(text, priority)){
+        if (existsByTextAndPriority(text, priority)) {
             ToDo value = new ToDo(text, priority);
             for (Entry<Integer, ToDo> entry : toDoMap.entrySet()) {
                 if (Objects.equals(value, entry.getValue())) {
@@ -45,16 +44,16 @@ public class ToDoRepositoryImpl implements ToDoRepository{
         return null;
     }
 
-   @Override
-   public List<ToDo> findAll(){
-       return new ArrayList<>(this.toDoMap.values());
-   }
+    @Override
+    public List<ToDo> findAll() {
+        return new ArrayList<>(this.toDoMap.values());
+    }
 
     @Override
     public List<ToDo> findAllByText(String text) {
         List<ToDo> newList = new ArrayList<>();
-        for(ToDo toDo : this.toDoMap.values()){
-            if(toDo.getText().equals(text)){
+        for (ToDo toDo : this.toDoMap.values()) {
+            if (toDo.getText().equals(text)) {
                 newList.add(toDo);
             }
         }
@@ -65,8 +64,8 @@ public class ToDoRepositoryImpl implements ToDoRepository{
     @Override
     public List<ToDo> findAllByPriority(Priority priority) {
         List<ToDo> newList = new ArrayList<>();
-        for(ToDo toDo : this.toDoMap.values()){
-            if(toDo.getPriority().equals(priority)){
+        for (ToDo toDo : this.toDoMap.values()) {
+            if (toDo.getPriority().equals(priority)) {
                 newList.add(toDo);
             }
         }
@@ -77,8 +76,8 @@ public class ToDoRepositoryImpl implements ToDoRepository{
     @Override
     public List<ToDo> findAllByDone(boolean done) {
         List<ToDo> newList = new ArrayList<>();
-        for(ToDo toDo : this.toDoMap.values()){
-            if(toDo.isDone() == done){
+        for (ToDo toDo : this.toDoMap.values()) {
+            if (toDo.isDone() == done) {
                 newList.add(toDo);
             }
         }
@@ -87,13 +86,13 @@ public class ToDoRepositoryImpl implements ToDoRepository{
     }
 
     @Override
-    public ToDo save(ToDo toDo){
+    public ToDo save(ToDo toDo) {
         this.toDoMap.put(toDo.getId(), toDo);
         return toDo;
     }
 
     @Override
-    public void deleteById(int id){
+    public void deleteById(int id) {
         this.toDoMap.remove(id);
     }
 

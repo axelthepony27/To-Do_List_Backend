@@ -10,24 +10,24 @@ import java.util.List;
 
 public abstract class PaginationAndSorting {
 
-    public static Page<ToDo> toDoListToPage(List<ToDo> list, int pageSize, int pageNo, String sortType, boolean descending){
+    public static Page<ToDo> toDoListToPage(List<ToDo> list, int pageSize, int pageNo, String sortType, boolean descending) {
         switch (sortType) {
             case "priority" -> {
-                if(descending){
+                if (descending) {
                     list.sort(Comparator.comparing(ToDo::getPriority).reversed());
                 } else {
                     list.sort(Comparator.comparing(ToDo::getPriority));
                 }
             }
             case "dueDate" -> {
-                if(descending){
+                if (descending) {
                     list.sort(Comparator.comparing(ToDo::getDueDate, Comparator.nullsFirst(Comparator.naturalOrder())).reversed());
                 } else {
                     list.sort(Comparator.comparing(ToDo::getDueDate, Comparator.nullsFirst(Comparator.naturalOrder())));
                 }
             }
             case "priorityAndDueDate" -> {
-                if(descending){
+                if (descending) {
                     list.sort(Comparator.comparing(ToDo::getDueDate, Comparator.nullsFirst(Comparator.naturalOrder())).reversed());
                     list.sort(Comparator.comparing(ToDo::getPriority).reversed());
                 } else {
