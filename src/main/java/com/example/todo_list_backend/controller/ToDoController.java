@@ -5,6 +5,7 @@ import com.example.todo_list_backend.repository.ToDoRepository;
 import com.example.todo_list_backend.service.ToDoService;
 import com.example.todo_list_backend.service.errorHandling.ToDoNotFoundException;
 import com.example.todo_list_backend.utils.JsonHandler;
+import com.example.todo_list_backend.utils.PaginationAndSorting;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,8 @@ public class ToDoController {
 
     private final ToDoRepository toDoRepository;
 
+    private static final int PAGE_SIZE = 5;
+
     @Autowired
     public ToDoController(ToDoService toDoService, ToDoRepository toDoRepository){
         this.toDoService = toDoService;
@@ -32,10 +35,11 @@ public class ToDoController {
     private ResponseEntity<String> toDos(@RequestParam Optional<Integer> pageNo,
                                          @RequestParam Optional<String> sortType,
                                          @RequestParam Optional<Boolean> descending) {
-        int toPageValue = pageNo.orElse(0);
+        int pageNoValue = pageNo.orElse(0);
         String sortTypeValue = sortType.orElse("default");
         boolean descendingValue = descending.orElse(false);
-        Page<ToDo> page = toDoRepository.toPage(5, toPageValue, sortTypeValue, descendingValue);
+        Page<ToDo> page = PaginationAndSorting.toDoListToPage(toDoRepository.findAll(), PAGE_SIZE,
+                pageNoValue, sortTypeValue, descendingValue);
         return new ResponseEntity<>(JsonHandler.toJson(page.getContent()), HttpStatus.OK);
     }
 

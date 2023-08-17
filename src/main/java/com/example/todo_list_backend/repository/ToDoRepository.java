@@ -43,8 +43,6 @@ public interface ToDoRepository {
 
     void deleteById(int id);
 
-    Page<ToDo> toPage(int pageSize, int pageNo, String sortType, boolean descending);
-
     static Map<Integer, ToDo> generateSampleToDoMap() {
         Map<Integer, ToDo> toDos = new LinkedHashMap<>();
 
