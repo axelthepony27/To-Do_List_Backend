@@ -98,16 +98,41 @@ public class ToDoRepositoryImpl implements ToDoRepository{
     }
 
     @Override
-    public Page<ToDo> toPage(int pageSize, int pageNo){
+    public Page<ToDo> toPage(int pageSize, int pageNo, String sortType, boolean descending){
         List<ToDo> list = this.findAll();
+
+        switch (sortType) {
+            case "priority" -> {
+                if(descending){
+                    list.sort(Comparator.comparing(ToDo::getPriority).reversed());
+                } else {
+                    list.sort(Comparator.comparing(ToDo::getPriority));
+                }
+            }
+            case "dueDate" -> {
+                if(descending){
+                    list.sort(Comparator.comparing(ToDo::getDueDate, Comparator.nullsFirst(Comparator.naturalOrder())).reversed());
+                } else {
+                    list.sort(Comparator.comparing(ToDo::getDueDate, Comparator.nullsFirst(Comparator.naturalOrder())));
+                }
+            }
+            case "priorityAndDueDate" -> {
+                if(descending){
+                    list.sort(Comparator.comparing(ToDo::getDueDate, Comparator.nullsFirst(Comparator.naturalOrder())).reversed());
+                    list.sort(Comparator.comparing(ToDo::getPriority).reversed());
+                } else {
+                    list.sort(Comparator.comparing(ToDo::getDueDate, Comparator.nullsFirst(Comparator.naturalOrder())));
+                    list.sort(Comparator.comparing(ToDo::getPriority));
+            }
+            }
+        }
+
 
         int totalPages = list.size() / pageSize;
         PageRequest pageable = PageRequest.of(pageNo, pageSize);
 
         int max = pageNo >= totalPages ? list.size() : pageSize * (pageNo + 1);
         int min = pageNo > totalPages ? max : pageSize * pageNo;
-
-        // logger.info("totalPages{} pageSize {} pageNo {}   list size {} min {}   max {} ...........", totalPages,pageSize, pageNo, list.size(), min, max);
 
         return new PageImpl<>(list.subList(min, max), pageable, list.size());
     }

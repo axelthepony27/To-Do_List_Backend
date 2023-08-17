@@ -8,7 +8,6 @@ import com.example.todo_list_backend.utils.JsonHandler;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,9 +29,13 @@ public class ToDoController {
     }
 
     @GetMapping("")
-    private ResponseEntity<String> toDos(@RequestParam Optional<Integer> pageNo) {
-        int paramValue = pageNo.orElse(0);
-        Page<ToDo> page = toDoRepository.toPage(5, paramValue);
+    private ResponseEntity<String> toDos(@RequestParam Optional<Integer> pageNo,
+                                         @RequestParam Optional<String> sortType,
+                                         @RequestParam Optional<Boolean> descending) {
+        int toPageValue = pageNo.orElse(0);
+        String sortTypeValue = sortType.orElse("default");
+        boolean descendingValue = descending.orElse(false);
+        Page<ToDo> page = toDoRepository.toPage(5, toPageValue, sortTypeValue, descendingValue);
         return new ResponseEntity<>(JsonHandler.toJson(page.getContent()), HttpStatus.OK);
     }
 

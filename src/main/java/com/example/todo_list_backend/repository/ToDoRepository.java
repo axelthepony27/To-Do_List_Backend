@@ -43,7 +43,7 @@ public interface ToDoRepository {
 
     void deleteById(int id);
 
-    Page<ToDo> toPage(int pageSize, int pageNo);
+    Page<ToDo> toPage(int pageSize, int pageNo, String sortType, boolean descending);
 
     static Map<Integer, ToDo> generateSampleToDoMap() {
         Map<Integer, ToDo> toDos = new LinkedHashMap<>();
@@ -62,6 +62,26 @@ public interface ToDoRepository {
         ToDo toDo4 = new ToDo(toDos.size(), "This is one more to-do. Should be fourth on the list.", Priority.HIGH,
                 LocalDate.parse("2023-08-10"));
         toDos.put(toDo4.getId(), toDo4);
+
+        ToDo toDo5 = new ToDo(toDos.size(), "This is yet one more to-do. Should be the last one on the first page.",
+                Priority.MEDIUM,
+                LocalDate.parse("2023-09-10"));
+        toDos.put(toDo5.getId(), toDo5);
+
+        ToDo toDo6 = new ToDo(toDos.size(), "This is another to-do. Should be the first one of the second page.",
+                Priority.LOW,
+                LocalDate.parse("2023-11-22"));
+        toDos.put(toDo6.getId(), toDo6);
+
+        ToDo toDo7 = new ToDo(toDos.size(), "This is another to-do. Should be the second one of the second page.",
+                Priority.LOW,
+                LocalDate.parse("2023-11-25"));
+        toDos.put(toDo7.getId(), toDo7);
+
+        ToDo toDo8 = new ToDo(toDos.size(), "This is another to-do. Should be the last one overall.",
+                Priority.LOW,
+                LocalDate.parse("2023-08-20"));
+        toDos.put(toDo8.getId(), toDo8);
 
         return toDos;
     }
