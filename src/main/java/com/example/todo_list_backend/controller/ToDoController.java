@@ -6,6 +6,7 @@ import com.example.todo_list_backend.service.ToDoService;
 import com.example.todo_list_backend.service.errorHandling.ToDoNotFoundException;
 import com.example.todo_list_backend.utils.JsonHandler;
 import com.example.todo_list_backend.utils.PaginationAndSorting;
+import com.example.todo_list_backend.utils.ToDoMetrics;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,12 +24,15 @@ public class ToDoController {
 
     private final ToDoRepository toDoRepository;
 
+    private final ToDoMetrics toDoMetrics;
+
     private static final int PAGE_SIZE = 5;
 
     @Autowired
-    public ToDoController(ToDoService toDoService, ToDoRepository toDoRepository){
+    public ToDoController(ToDoService toDoService, ToDoRepository toDoRepository, ToDoMetrics toDoMetrics){
         this.toDoService = toDoService;
         this.toDoRepository = toDoRepository;
+        this.toDoMetrics = toDoMetrics;
     }
 
     @GetMapping("")
@@ -40,6 +44,8 @@ public class ToDoController {
         boolean descendingValue = descending.orElse(false);
         Page<ToDo> page = PaginationAndSorting.toDoListToPage(toDoRepository.findAll(), PAGE_SIZE,
                 pageNoValue, sortTypeValue, descendingValue);
+        System.out.println(toDoMetrics.metrics());
+        System.out.println(toDoMetrics.metricsByPriority());
         return new ResponseEntity<>(JsonHandler.toJson(page.getContent()), HttpStatus.OK);
     }
 

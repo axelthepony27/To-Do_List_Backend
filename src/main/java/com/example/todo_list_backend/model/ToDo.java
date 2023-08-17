@@ -1,13 +1,14 @@
 package com.example.todo_list_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.Random;
 
 /*
     When database is ready, make sure to annotate this class
@@ -26,8 +27,8 @@ public class ToDo {
     @NotNull
     private Priority priority;
     private LocalDate dueDate;
-    private final LocalDate dateCreated = LocalDate.now();
-    private LocalDate dateDone;
+    private final LocalDateTime dateCreated = LocalDateTime.now();
+    private LocalDateTime dateDone;
 
     public ToDo() {
     }
@@ -38,7 +39,6 @@ public class ToDo {
         this.done = false;
         this.priority = priority;
         this.dueDate = null;
-        // this.dateCreated = java.time.LocalDate.now();
         this.dateDone = null;
     }
 
@@ -48,7 +48,6 @@ public class ToDo {
         this.done = false;
         this.priority = priority;
         this.dueDate = dueDate;
-        // this.dateCreated = java.time.LocalDate.now();
         this.dateDone = null;
     }
 
@@ -84,15 +83,9 @@ public class ToDo {
         this.done = done;
     }
 
-    public LocalDate getDateCreated() {
+    public LocalDateTime getDateCreated() {
         return dateCreated;
     }
-
-    /*
-    public void setDateCreated(LocalDate dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-     */
 
     public Priority getPriority() {
         return priority;
@@ -102,11 +95,11 @@ public class ToDo {
         this.priority = priority;
     }
 
-    public LocalDate getDateDone() {
+    public LocalDateTime getDateDone() {
         return dateDone;
     }
 
-    public void setDateDone(LocalDate dateDone) {
+    public void setDateDone(LocalDateTime dateDone) {
         this.dateDone = dateDone;
     }
 
@@ -118,8 +111,8 @@ public class ToDo {
                 ", done=" + done +
                 ", priority=" + priority +
                 ", dueDate=" + dueDate +
-                ", dateCreated=" + dateCreated +
-                ", dateDone=" + dateDone +
+                ", dateCreated=" + dateCreated.toLocalDate() +
+                ", dateDone=" + dateDone.toLocalDate() +
                 '}';
     }
 

@@ -1,15 +1,11 @@
 package com.example.todo_list_backend.service;
 
-import com.example.todo_list_backend.model.Priority;
 import com.example.todo_list_backend.model.ToDo;
 import com.example.todo_list_backend.repository.ToDoRepository;
-import com.example.todo_list_backend.repository.ToDoRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 
 /*
     Once database is ready, implement the service methods correctly.
@@ -44,7 +40,7 @@ public class ToDoServiceImpl implements ToDoService{
     public ToDo changeDoneToTrue(ToDo toDo) {
         if (!toDo.isDone()) {
             toDo.setDone(true);
-            toDo.setDateDone(java.time.LocalDate.now());
+            toDo.setDateDone(LocalDateTime.now());
         }
         return edit(toDo);
     }
